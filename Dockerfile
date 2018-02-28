@@ -4,7 +4,8 @@ FROM docker.io/fedora:27
 RUN dnf install -y python2-pip \
     @'C Development Tools and Libraries' \
     redhat-rpm-config \
-    python2-devel && \
+    python2-devel \
+    python-psycopg2 python-PyMySQL && \
     dnf clean all
 
 RUN pip install -U setuptools ara

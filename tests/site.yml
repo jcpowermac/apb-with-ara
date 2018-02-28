@@ -1,0 +1,12 @@
+- name: Testing ARA with OpenShift
+  gather_facts: True
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Testing Command
+      command: ansible-playbook --help
+
+    - name: Testing Shell
+      shell: "echo 'foo' > /dev/null"
+
+
