@@ -1,0 +1,28 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    openshift.io/scc: restricted
+  labels:
+    run: ara-test
+  name: ara-test
+spec:
+  containers:
+  - args:
+    - bash
+    env:
+    - name: NODE_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: spec.nodeName
+    - name: ARA_DATABASE
+      value: "postgresql+psycopg2://ara:password@$(NODE_NAME):32345/ara"
+    image: quay.io/jcallen/ara
+    imagePullPolicy: Always
+    name: ara-test
+    stdin: true
+    stdinOnce: true
+    tty: true
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
