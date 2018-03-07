@@ -1,0 +1,40 @@
+FROM ansibleplaybookbundle/apb-base:canary
+
+LABEL "com.redhat.apb.spec"=\
+"dmVyc2lvbjogMS4wCm5hbWU6IGVjbGlwc2UtY2hlLWFwYgpkZXNjcmlwdGlvbjogVGhpcyBpcyBh\
+IHNhbXBsZSBhcHBsaWNhdGlvbiBnZW5lcmF0ZWQgYnkgYXBiIGluaXQKYmluZGFibGU6IEZhbHNl\
+CmFzeW5jOiBvcHRpb25hbAptZXRhZGF0YToKICBkaXNwbGF5TmFtZTogZWNsaXBzZS1jaGUKcGxh\
+bnM6CiAgLSBuYW1lOiBkZXYKICAgIGRlc2NyaXB0aW9uOiBUaGlzIGRldiBwbGFuIGRlcGxveXMg\
+ZWNsaXBzZS1jaGUtYXBiCiAgICBmcmVlOiBUcnVlCiAgICBtZXRhZGF0YToge30KICAgIHBhcmFt\
+ZXRlcnM6IFtdCiAgLSBuYW1lOiBwcm9kCiAgICBkZXNjcmlwdGlvbjogVGhpcyBwcm9kIHBsYW4g\
+ZGVwbG95cyBlY2xpcHNlLWNoZS1hcGIKICAgIGZyZWU6IFRydWUKICAgIG1ldGFkYXRhOiB7fQog\
+ICAgcGFyYW1ldGVyczogW10K"
+
+
+
+
+
+
+COPY playbooks /opt/apb/actions
+COPY roles /opt/ansible/roles
+RUN chmod -R g=u /opt/{ansible,apb}
+
+# must be used with ansibleplaybookbundle/apb-base:canary
+# Currently the assumption is using `oc cluster up` with `run_latest_build.sh`
+# Replace IPADDR with the ip address of the machine that is running the oc cluster.
+
+USER root
+RUN yum install -y python-psycopg2 && \
+    pip install ara && \
+    yum clean all
+
+USER apb
+
+ENV IPADDR="172.31.51.52"
+
+ENV ARA_DATABASE="postgresql+psycopg2://ara:password@${IPADDR}:32345/ara" \
+    ARA_BASE="/usr/lib/python2.7/site-packages/ara"
+
+ENV ANSIBLE_CALLBACK_PLUGINS=${ARA_BASE}/plugins/callbacks \
+    ANSIBLE_ACTION_PLUGINS=${ARA_BASE}/plugins/actions \
+    ANSIBLE_LIBRARY=${ARA_BASE}/plugins/modules
