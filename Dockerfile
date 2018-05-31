@@ -1,4 +1,4 @@
-FROM docker.io/fedora:27
+FROM docker.io/fedora:28
 
 
 RUN dnf install -y python2-pip \
