@@ -8,7 +8,7 @@ RUN dnf install -y python2-pip \
     python-psycopg2 python-PyMySQL && \
     dnf clean all
 
-RUN pip install -U setuptools ara
+RUN pip install -U setuptools ara==0.14.6
 
 
 ENV APP_ROOT=/opt/app-root
