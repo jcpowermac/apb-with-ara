@@ -1,4 +1,4 @@
-FROM docker.io/fedora:28
+FROM docker.io/fedora:29
 
 
 RUN dnf install -y python2-pip \
@@ -8,7 +8,7 @@ RUN dnf install -y python2-pip \
     python-psycopg2 python-PyMySQL && \
     dnf clean all
 
-RUN pip install -U setuptools ara==0.14.6
+RUN pip install -U setuptools ara==0.16.3
 
 
 ENV APP_ROOT=/opt/app-root

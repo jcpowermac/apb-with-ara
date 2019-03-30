@@ -147,7 +147,7 @@ objects:
             value: password
           - name: POSTGRESQL_DATABASE
             value: ara
-          image: docker.io/centos/postgresql-96-centos7
+          image: registry.centos.org/centos/postgresql-96-centos7:latest
           imagePullPolicy: IfNotPresent
           livenessProbe:
             exec:
