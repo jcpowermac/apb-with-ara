@@ -5,4 +5,4 @@ whoami
 #ara-manage runserver
 
 #httpd -DFOREGROUND
-gunicorn -w 4 -b 0.0.0.0:8080 ara.wsgi:application
+gunicorn-3 -w 4 -b 0.0.0.0:8080 ara.wsgi:application
