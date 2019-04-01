@@ -1,14 +1,19 @@
-FROM registry.fedoraproject.org/f29/httpd  
+FROM registry.fedoraproject.org/fedora:29
 
-USER root
-RUN dnf install -y python3-psycopg2 ara mod_wsgi && \
+RUN dnf install -y python3-gunicorn python3-psycopg2 ara && \
     dnf clean all
 
-ENV ARA_WWW=/var/www/ara
-COPY ara.conf /etc/httpd/conf.d/
-RUN mkdir -p ${ARA_WWW} && \
-    cp -p $(which ara-wsgi) ${ARA_WWW} && \
-    chown -R apache:0 ${ARA_WWW}
-COPY ansible.cfg ${ARA_WWW}
+ENV APP_ROOT=/opt/app-root
+ENV PATH=${APP_ROOT}/bin:${PATH} HOME=${APP_ROOT}
+ENV ANSIBLE_CONFIG=/ansible.cfg
+COPY bin/ ${APP_ROOT}/bin/
+COPY ansible.cfg /
+RUN chmod -R u+x ${APP_ROOT}/bin && \
+    chgrp -R 0 ${APP_ROOT} && \
+    chmod -R g=u ${APP_ROOT} /ansible.cfg /etc/passwd
 
-USER 1001    
+EXPOSE 8080
+USER 10001
+WORKDIR ${APP_ROOT}
+ENTRYPOINT [ "uid_entrypoint" ]
+CMD run
