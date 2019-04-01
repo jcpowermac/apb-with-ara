@@ -25,7 +25,8 @@ RUN chmod -R u+x ${APP_ROOT}/bin && \
     mkdir -p /run/httpd && \
     cp -p $(which ara-wsgi) ${ARA_WWW} && \
     chown -R apache:0 /etc/httpd/ ${ARA_WWW} /run/httpd/ && \
-    rm /run/httpd/httpd.pid || true
+    rm /run/httpd/httpd.pid || true && \
+    sed -i '/Listen 80/c\Listen 8080' /etc/httpd/conf/httpd.conf
 
 EXPOSE 8080
 USER 10001
