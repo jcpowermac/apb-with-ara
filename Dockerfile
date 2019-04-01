@@ -1,14 +1,16 @@
 FROM docker.io/fedora:29
 
 
-RUN dnf install -y python2-pip \
-    @'C Development Tools and Libraries' \
-    redhat-rpm-config \
-    python2-devel \
-    python-psycopg2 httpd mod_wsgi && \
+#RUN dnf install -y python2-pip \
+#    @'C Development Tools and Libraries' \
+#    redhat-rpm-config \
+#    python2-devel \
+#    python3-psycopg2 ara httpd mod_wsgi && \
+#    dnf clean all
+RUN dnf install -y python3-psycopg2 ara httpd mod_wsgi && \
     dnf clean all
 
-RUN pip install -U setuptools ara==0.16.3
+#RUN pip install -U setuptools ara==0.16.3
 
 
 ENV APP_ROOT=/opt/app-root
