@@ -2,4 +2,6 @@
 id
 whoami
 
-ara-manage runserver
+#ara-manage runserver
+
+httpd -DFOREGROUND
