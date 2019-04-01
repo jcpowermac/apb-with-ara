@@ -21,7 +21,7 @@ RUN chmod -R u+x ${APP_ROOT}/bin && \
     chmod -R g=u ${APP_ROOT} /etc/passwd && \
     mkdir -p ${ARA_WWW} && \
     cp -p $(which ara-wsgi) ${ARA_WWW} && \
-    chmod -R apache:apache /etc/httpd/ ${ARA_WWW}
+    chown -R apache:0 /etc/httpd/ ${ARA_WWW}
 
 EXPOSE 8080
 USER 10001
