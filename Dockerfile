@@ -10,8 +10,8 @@ ENV ARA_WWW=/var/www/ara
 COPY bin/ ${APP_ROOT}/bin/
 COPY ansible.cfg /
 RUN chmod -R u+x ${APP_ROOT}/bin && \
-    chgrp -R 0 ${APP_ROOT} ${ARA_WWW} && \
     mkdir -p ${ARA_WWW} && \
+    chgrp -R 0 ${APP_ROOT} ${ARA_WWW} && \
     chmod -R g=u ${APP_ROOT} ${ARA_WWW} /ansible.cfg /etc/passwd
 
 EXPOSE 8080
