@@ -22,8 +22,10 @@ RUN chmod -R u+x ${APP_ROOT}/bin && \
     chgrp -R 0 ${APP_ROOT} && \
     chmod -R g=u ${APP_ROOT} /etc/passwd && \
     mkdir -p ${ARA_WWW} && \
+    mkdir -p /run/httpd && \
     cp -p $(which ara-wsgi) ${ARA_WWW} && \
-    chown -R apache:0 /etc/httpd/ ${ARA_WWW}
+    chown -R apache:0 /etc/httpd/ ${ARA_WWW} /run/httpd/ && \
+    rm /run/httpd/httpd.pid || true
 
 EXPOSE 8080
 USER 10001
